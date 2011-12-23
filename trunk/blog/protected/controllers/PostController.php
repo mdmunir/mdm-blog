@@ -33,7 +33,7 @@ class PostController extends Controller {
             ),
             array('allow', // allow authenticated users to access all actions
                 'users' => array('@'),
-                'expression' => '!$user->isGuest && $user->can_posting)',
+                'expression' => '(!$user->isGuest && $user->can_posting)',
             ),
             array('deny', // deny all users
                 'users' => array('*'),
