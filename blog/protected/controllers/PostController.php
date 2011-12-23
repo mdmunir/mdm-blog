@@ -115,7 +115,7 @@ class PostController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        $this->isHome = TRUE;
+        $this->isHome = (!isset ($_GET['tag']) && !isset ($_GET['author']));
         $criteria = new CDbCriteria(array(
                     'condition' => 'status=' . Post::STATUS_PUBLISHED,
                     'order' => 't.id DESC',
@@ -125,7 +125,7 @@ class PostController extends Controller {
             $criteria->addSearchCondition('tags', $_GET['tag']);
 
         if (isset($_GET['author'])) {            
-            $criteria->compare('LOWER(author.username)', strtolower($_GET['author']));
+            $criteria->compare('t.author_id', $_GET['author']);
         }
 
         $dataProvider = new CActiveDataProvider('Post', array(

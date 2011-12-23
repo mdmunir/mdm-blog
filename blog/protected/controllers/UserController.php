@@ -48,8 +48,8 @@ class UserController extends Controller {
         );
     }
 
-    public function actionProfile($author) {
-        $model = User::model()->with('postingCount')->find('LOWER(username)=?', array(strtolower($author)));
+    public function actionProfile($id) {
+        $model = User::model()->with('postingCount')->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         $this->render('profile', array(
@@ -73,7 +73,7 @@ class UserController extends Controller {
             $model->password = $model->hashPassword($model->password1, $model->salt);
             $model->can_posting = FALSE;
             if ($model->save())
-                $this->redirect(array('profile', 'author' => $model->username));
+                $this->redirect(array('profile', 'id' => $model->id));
         }
 
         $this->render('create', array(
@@ -90,7 +90,7 @@ class UserController extends Controller {
             if ($model->validate()) {
                 $model->password = $model->hashPassword($model->password1, $model->salt);
                 $model->update(array('password'));
-                $this->redirect(array('profile', 'author' => $model->username));
+                $this->redirect(array('profile', 'id' => $model->id));
             }
         }
 
@@ -113,7 +113,7 @@ class UserController extends Controller {
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
             if ($model->save())
-                $this->redirect(array('profile', 'name' => $model->username));
+                $this->redirect(array('profile', 'id' => $model->id));
         }
 
         $this->render('update', array(
