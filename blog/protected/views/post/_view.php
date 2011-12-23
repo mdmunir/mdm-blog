@@ -15,7 +15,7 @@
 <?php echo CHtml::link(CHtml::encode($data->title), $data->url); ?>
     </div>
     <div class="author">
-        posted by <?php echo CHtml::link($data->author->username,$data->author->profileLink) . ' on ' . date('F j, Y', $data->create_time); ?>
+        posted by <?php echo CHtml::link($data->author->FullName,$data->author->profileLink) . ' on ' . date('F j, Y', $data->create_time); ?>
     </div>
     <div class="content">
         <?php
