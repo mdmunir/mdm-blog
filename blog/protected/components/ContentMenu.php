@@ -12,15 +12,16 @@ class ContentMenu extends CPortlet {
     }
 
     protected function getContentData() {
-        $data = Yii::app()->cache->get(self::CACHE_ID);
-        //$data = false;
+        //$data = Yii::app()->cache->get(self::CACHE_ID);
+        $data = false;
         if ($data === FALSE) {
             $content = Post::model()->findAll(array(
-                'select' => array('id, title, create_time')
+                'select' => array('id, title, create_time'),
+                'condition'=>'status='.Post::STATUS_PUBLISHED.' OR status='.Post::STATUS_ARCHIVED,
                     ));
             $data = $this->normalizeData($content);
-            $dependency = new CDbCacheDependency('SELECT MAX(update_time) FROM tbl_post');
-            Yii::app()->cache->set(self::CACHE_ID, $data, 0, $dependency);
+            //$dependency = new CDbCacheDependency('SELECT MAX(update_time) FROM tbl_post');
+            //Yii::app()->cache->set(self::CACHE_ID, $data, 0, $dependency);
         }
         if($this->controller->route == 'post/view' && isset ($_GET['id'])){
             $t = Yii::app()->db->createCommand('select create_time from tbl_post where id='.$_GET['id'])->queryScalar();
