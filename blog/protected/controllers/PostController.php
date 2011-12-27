@@ -35,6 +35,9 @@ class PostController extends Controller {
                 'users' => array('@'),
                 'expression' => '(!$user->isGuest && $user->can_posting)',
             ),
+            array('allow',
+                'users' => array('admin'),
+            ),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
@@ -115,16 +118,16 @@ class PostController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        $this->isHome = (!isset ($_GET['tag']) && !isset ($_GET['author']));
+        $this->isHome = (!isset($_GET['tag']) && !isset($_GET['author']));
         $criteria = new CDbCriteria(array(
                     'condition' => 'status=' . Post::STATUS_PUBLISHED,
                     'order' => 't.id DESC',
-                    'with' => array('commentCount','author'),
+                    'with' => array('commentCount', 'author'),
                 ));
         if (isset($_GET['tag']))
             $criteria->addSearchCondition('tags', $_GET['tag']);
 
-        if (isset($_GET['author'])) {            
+        if (isset($_GET['author'])) {
             $criteria->compare('t.author_id', $_GET['author']);
         }
 

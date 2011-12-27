@@ -39,7 +39,7 @@ class AdminController extends Controller {
 
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
         }
         else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
@@ -66,19 +66,7 @@ class AdminController extends Controller {
         ));
     }
 
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin() {
-        $model = new User('search');
-        $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['User']))
-            $model->attributes = $_GET['User'];
-
-        $this->render('admin', array(
-            'model' => $model,
-        ));
-    }
+    
     
     /**
      * Returns the data model based on the primary key given in the GET variable.
