@@ -28,6 +28,12 @@
 	</div>
 <?php     endif; ?>
 	<div class="row">
+		<?php echo $form->labelEx($model,'full_name'); ?>
+		<?php echo $form->textField($model,'full_name',array('size'=>20,'maxlength'=>64)); ?>
+		<?php echo $form->error($model,'full_name'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>20,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'email'); ?>
