@@ -40,25 +40,32 @@ class User extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('username, email, password1, password2', 'required', 'on' => 'insert'),
-            array('username','unique','on'=>'insert','caseSensitive'=>false),
-            //array('username', 'match', 'pattern'=>'/^([a-zA-Z0-9_])+$/'),
+            array('username', 'unique', 'on' => 'insert', 'caseSensitive' => false),
+            array('username', 'match', 'pattern' => '/^([a-zA-Z0-9_])+$/'),
             array('old_password, password1, password2', 'required', 'on' => 'changePassword'),
             array('username, email', 'length', 'max' => 64),
             array('email', 'email',),
             array('password2', 'compare', 'compareAttribute' => 'password1', 'on' => array('insert', 'changePassword')),
             array('old_password', 'authenticate', 'on' => 'changePassword'),
-            array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements(), 'on' => 'insert'),
-            array('profile, password1, old_password', 'safe'),
+            array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements() || true, 'on' => 'insert'),
+            array('profile, password1, old_password, full_name', 'safe'),
         );
     }
 
-    public function allowPosting($allow){
+    public function allowPosting($allow) {
         $this->can_posting = $allow;
         $this->update(array('can_posting'));
     }
-    
-    public function getProfileLink(){
-        return CHtml::normalizeUrl(array('user/profile','author'=>  $this->username));
+
+    public function getProfileLink() {
+        return CHtml::normalizeUrl(array('user/profile', 'id' => $this->id));
+    }
+
+    public function getFullName() {
+        if (!empty($this->full_name))
+            return $this->full_name;
+        else
+            return $this->username;
     }
 
     /**
@@ -69,8 +76,8 @@ class User extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'posts' => array(self::HAS_MANY, 'Post', 'author_id'),
-            'postingCount'=> array(self::STAT,'Post', 'author_id',
-                'condition'=>'status='.Post::STATUS_PUBLISHED.' OR '.'status='.Post::STATUS_ARCHIVED),
+            'postingCount' => array(self::STAT, 'Post', 'author_id',
+                'condition' => 'status=' . Post::STATUS_PUBLISHED . ' OR ' . 'status=' . Post::STATUS_ARCHIVED),
         );
     }
 
