@@ -72,8 +72,15 @@ class UserController extends Controller {
             $model->salt = $model->generateSalt();
             $model->password = $model->hashPassword($model->password1, $model->salt);
             $model->can_posting = FALSE;
-            if ($model->save())
+            if ($model->save()){
+                $login=new LoginForm;
+                $login->attributes = array(
+                    'username'=>$model->username,
+                    'password'=>$model->password1,
+                );
+                $login->login();
                 $this->redirect(array('profile', 'id' => $model->id));
+            }
         }
 
         $this->render('create', array(
