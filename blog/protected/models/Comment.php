@@ -41,6 +41,7 @@ class Comment extends CActiveRecord {
             array('author, email, url', 'length', 'max' => 128),
             array('email', 'email'),
             array('url', 'url'),
+            array('comment_parent','safe'),
         );
     }
 
@@ -52,6 +53,7 @@ class Comment extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'post' => array(self::BELONGS_TO, 'Post', 'post_id'),
+            'comments' => array(self::HAS_MANY, 'Comment', 'comment_parent', 'condition' => 'comments.status=' . Comment::STATUS_APPROVED, 'order' => 'comments.create_time ASC'),
         );
     }
 
