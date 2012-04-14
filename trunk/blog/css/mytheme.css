@@ -410,9 +410,21 @@ div.breadcrumbs span
 /*    -moz-border-radius:7px;*/
     border-radius:7px;
     padding: 10px;
-    background: #F5F5F5;
     margin: 5px 0;
 }
+
+.bg-comment-o{    
+    background: #E5E5F5;
+}
+
+.bg-comment-e{    
+    background: #F5F5F5;
+}
+/*
+.comment .comment{
+    border-style: solid;
+    border-width: 1px;
+}*/
 
 .comment .content
 {

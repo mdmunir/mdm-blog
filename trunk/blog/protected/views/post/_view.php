@@ -15,7 +15,7 @@
 <?php echo CHtml::link(CHtml::encode($data->title), $data->url); ?>
     </div>
     <div class="author">
-        posted by <?php echo CHtml::link($data->author->FullName,$data->author->profileLink) . ' on ' . date('F j, Y', $data->create_time); ?>
+        posted by <?php echo CHtml::link($data->author->FullName,$data->author->profileLink) . ' on ' . date('j F, Y', $data->create_time); ?>
     </div>
     <div class="content">
         <?php
@@ -31,6 +31,6 @@
         <br/>
 <?php echo CHtml::link('Permalink', $data->url); ?> |
 <?php echo CHtml::link("Comments ({$data->commentCount})", $data->url . '#comments'); ?> |
-        Last updated on <?php echo date('F j, Y', $data->update_time); ?>
+        Last updated on <?php echo date('j F, Y', $data->update_time); ?>
     </div>
 </div>

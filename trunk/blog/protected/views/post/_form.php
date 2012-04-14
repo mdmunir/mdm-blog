@@ -14,17 +14,17 @@
 
     <div class="row">        
         <?php echo $form->labelEx($model, 'content'); ?>
-        <?php //echo CHtml::activeTextArea($model,'content',array('rows'=>10, 'cols'=>70)); ?>
+        <?php //echo CHtml::activeTextArea($model,'content',array('rows'=>20, 'cols'=>70)); ?>
         <?php
         $this->widget('ext.MdmCkEditor.MdmCkEditor', array(
             'model' => $model,
             'attribute' => 'content',
             'options' => array(
-                'extraPlugins' => 'equation',
+                'extraPlugins' => 'equation,syntaxhighlight',
                 'toolbar' => array(
                     array('Source'),
                     array('Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'),
-                    array('equation', 'Image', 'Table','Link', 'Smiley', 'Iframe'),
+                    array('equation', 'Code','Image', 'Table','Link', 'Smiley', 'Iframe'),
                     array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock')
                 ),
                 'skin'=>'office2003'

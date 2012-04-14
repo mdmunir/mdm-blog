@@ -7,6 +7,7 @@
 ?>
 
 <?php
+$this->widget('Search');
 
 $this->widget('ContentMenu');
 
